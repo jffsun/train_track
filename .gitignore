@@ -1,0 +1,8 @@
+#Node modules
+node_modules
+
+# Machine specific config files
+.env
+
+# Mac DS_Store Files
+.DS_Store
