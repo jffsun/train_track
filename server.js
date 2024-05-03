@@ -1,13 +1,5 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(
- 'train_track_db',
- 'jeffreysun',
- 'Raven510',
-  {
-    host: 'localhost',
-    dialect: 'mysql'
-  }
-);
+const sequelize = require('./config');
 
 sequelize.authenticate().then(() => {
   console.log('Connection has been established successfully.');

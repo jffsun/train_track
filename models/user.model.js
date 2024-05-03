@@ -1,13 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize(
- 'train_track_db',
- 'jeffreysun',
- 'Raven510',
-  {
-    host: 'localhost',
-    dialect: 'mysql'
-  }
-);
+const sequelize = require('../config');
 const TrainingSet = require('./trainingSet.model');
 
 sequelize.authenticate().then(() => {
@@ -16,7 +8,7 @@ sequelize.authenticate().then(() => {
   console.error('Unable to connect to the database: ', error);
 });
 
-const User = sequelize.define("users", {
+const User = sequelize.define('User', {
   user_id: {
      type: DataTypes.UUID,
      defaultValue: DataTypes.UUIDV4,
@@ -31,9 +23,6 @@ const User = sequelize.define("users", {
     allowNull: false,
   }
 });
-
-User.hasMany(TrainingSet);
-TrainingSet.belongsTo(User);
 
 sequelize.sync().then(() => {
   console.log('User table created successfully!');

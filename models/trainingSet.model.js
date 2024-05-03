@@ -1,23 +1,9 @@
-const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize(
- 'train_track_db',
- 'jeffreysun',
- 'Raven510',
-  {
-    host: 'localhost',
-    dialect: 'mysql'
-  }
-);
-const User = require('./user.model')
+const { DataTypes } = require("sequelize");
+const sequelize = require('../config');
+const User = require('./user.model');
 
-sequelize.authenticate().then(() => {
-  console.log('Connection has been established successfully.');
-}).catch((error) => {
-  console.error('Unable to connect to the database: ', error);
-});
-
-// Define Training set properties 
-const TrainingSet = sequelize.define("trainingSets", {
+// Define TrainingSet model
+const TrainingSet = sequelize.define('TrainingSet', {
   date: {
     type: DataTypes.DATEONLY,
   }, 
@@ -36,16 +22,17 @@ const TrainingSet = sequelize.define("trainingSets", {
   set_type: {
     type: DataTypes.STRING,
     defaultValue: "Straight"
-  },
+  }
 });
 
-// Define Training set and User model associations
+// Define association
 TrainingSet.belongsTo(User);
-User.hasMany(TrainingSet);
 
-// Deletes a Training set table if it already exists
-sequelize.sync({ force: true }).then(() => {
-  console.log('Training set table created successfully!');
+// Sync the model with the database
+sequelize.sync().then(() => {
+  console.log('TrainingSet table created successfully!');
 }).catch((error) => {
   console.error('Unable to create table : ', error);
 });
+
+module.exports = TrainingSet;
